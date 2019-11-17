@@ -11,14 +11,16 @@ mongoose.connect('mongodb+srv://dbUser:Cw5S9sba0g7Pu8ZF0iF3@cluster0-ktf9m.mongo
 //Setup Schema
 const campgroundSchema = new mongoose.Schema({
 	name: String,
-	image: String
+	image: String,
+	description: String
 });
 
 const Campground = mongoose.model('Campground', campgroundSchema);
 
 // Campground.create({
 // 	name: 'Granite Hills',
-// 	image: 'https://cdn.pixabay.com/photo/2016/08/28/17/05/camping-1626412_960_720.jpg'
+// 	image: 'https://cdn.pixabay.com/photo/2016/08/28/17/05/camping-1626412_960_720.jpg',
+// 	description: 'Robot ipsum datus scan amet, constructor ad ut splicing elit, sed do errus mod tempor in conduit ut laboratory et deplore electromagna aliqua. Ut enim ad minimum veniam, quis no indestruct exoform ullamco laboris nisi ut alius equip ex ea commando evaluant. Duis ex machina aute ire dolorus in scan detectus an voluptate volt esse cesium dolore eu futile nulla parameter. Execute primus sint occaecat cupidatat non proident, sunt in culpa qui technia deserunt mondus anim id est proceus.'
 // }, (err, campground) => {
 // 	if (err) {
 // 		console.log(error);
@@ -39,7 +41,7 @@ app.get('/campgrounds', (req, res) => {
 		if (err) {
 			console.log(error)
 		} else {
-			res.render('campgrounds', { campgrounds: campgrounds });
+			res.render('index', { campgrounds: campgrounds });
 		}
 	});
 })
@@ -60,6 +62,17 @@ app.post('/campgrounds', (req, res) => {
 		}
 	});
 	// res.send("You Hit the post route");
+})
+
+app.get('/campgrounds/:id', (req, res)=>{
+	//Find campground with the id and render template;
+	Campground.findById(req.params.id,(err, campground)=>{
+		if(err){
+			console.log(err);
+		} else {
+			res.render('show', {campground: campground});
+		}
+	})
 })
 
 app.listen(3000, () => {
