@@ -53,7 +53,8 @@ app.get('/campgrounds/new', (req, res) => {
 app.post('/campgrounds', (req, res) => {
 	const name = req.body.name;
 	const image = req.body.image;
-	Campground.create({ name: name, image: image }, (err, campground) => {
+	const description = req.body.description;
+	Campground.create({ name: name, image: image, description: description }, (err, campground) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -64,6 +65,8 @@ app.post('/campgrounds', (req, res) => {
 	// res.send("You Hit the post route");
 })
 
+//There are 4 routes show/ index and delete and update
+//Show Route 
 app.get('/campgrounds/:id', (req, res)=>{
 	//Find campground with the id and render template;
 	Campground.findById(req.params.id,(err, campground)=>{
